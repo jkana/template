@@ -1,0 +1,30 @@
+id: httptrace-file
+
+info:
+  name: Publicly accessible httptrace-file
+  author: jkana101
+  severity: Medium
+  tags: logs
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/manage/httptrace"
+      - "{{BaseURL}}/httptrace"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"GET /'
+
+      - type: word
+        words:
+          - "traces"
+          - "timestamp"
+          - "principal"
+        part: body
+
+      - type: status
+        status:
+          - 200

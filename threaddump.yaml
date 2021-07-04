@@ -1,0 +1,30 @@
+id: Threaddump-file
+
+info:
+  name: Publicly accessible Threaddump-file
+  author: jkana101
+  severity: Medium
+  tags: logs
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/manage/threaddump"
+      - "{{BaseURL}}/threaddump"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"GET /'
+
+      - type: word
+        words:
+          - "methodName"
+          - "threads"
+          - "threadName"
+        part: body
+
+      - type: status
+        status:
+          - 200

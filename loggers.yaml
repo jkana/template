@@ -1,0 +1,29 @@
+id: loggers-file
+
+info:
+  name: Publicly accessible loggers-file
+  author: jkana101
+  severity: Medium
+  tags: logs
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/manage/loggers"
+      - "{{BaseURL}}/loggers"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"GET /'
+
+      - type: word
+        words:
+          - "configuredLevel"
+          - "levels"
+        part: body
+
+      - type: status
+        status:
+          - 200

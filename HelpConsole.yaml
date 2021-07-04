@@ -1,0 +1,31 @@
+id: HelpConsole-RCE
+
+info:
+  name: HelpConsole RCE
+  author: jkana101
+  severity: Critical
+  tags: rce
+
+requests:
+  - method: GET
+    path:
+      - "{{BaseURL}}/_engine"
+      - "{{BaseURL}}/helpconsole6/_engine"
+      - "{{BaseURL}}/help/_engine"
+      - "{{BaseURL}}/helpconsole/_engine"
+
+    matchers-condition: and
+    matchers:
+      - type: word
+        words:
+          - '"GET /'
+
+      - type: word
+        words:
+          - "HelpConsole"
+          - "divChangeAccountPasswordHTML"
+        part: body
+
+      - type: status
+        status:
+          - 200
